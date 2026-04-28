@@ -2,24 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { rolService } from '../service/rol.service.js';
 import { CreateRolDto } from '../dto/create-rol.dto.js';
 import { UpdateRolDto } from '../dto/update-rol.dto.js';
-import type { ZodError } from 'zod';
-
-function respondZodError(res: Response, error: ZodError): void {
-  res.status(400).json({
-    status: 'error',
-    message: 'Datos de entrada inválidos.',
-    errors: error.flatten().fieldErrors,
-  });
-}
-
-function parsePagination(query: any) {
-  const page = parseInt(query.page, 10) || 1;
-  const limit = parseInt(query.limit, 10) || 10;
-  return {
-    page: Math.max(1, page),
-    limit: Math.max(1, Math.min(100, limit)),
-  };
-}
+import { respondZodError } from '../../../helpers/respondZodError.js';
+import { parsePagination } from '../../../helpers/parsePagination.js';
 
 // ─── Controlador ─────────────────────────────────────
 export const rolController = {

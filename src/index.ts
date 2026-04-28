@@ -37,7 +37,7 @@ const main = async (): Promise<void> => {
     console.log("✅ Conexión a la base de datos exitosa!");
     // Sincronización de modelos (¡precaución en producción!)
     // cuando haya cambios en los modelos en desarrollo, usar force: true para reiniciar tablas (¡peligroso en producción!)
-    await sequelize.sync({ force: false }); // Cambia a 'true' para reiniciar tablas (¡peligroso en producción!)
+    await sequelize.sync({ force: true }); // Cambia a 'true' para reiniciar tablas (¡peligroso en producción!)
     // console.log("🔄 Modelos sincronizados con la base de datos.");
 
     app.listen(PORT, () => {

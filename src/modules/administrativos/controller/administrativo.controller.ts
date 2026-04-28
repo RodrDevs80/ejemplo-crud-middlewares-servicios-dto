@@ -2,30 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { administrativoService } from '../service/administrativo.service.js';
 import { CreateAdministrativoDto } from '../dto/create-administrativo.dto.js';
 import { UpdateAdministrativoDto } from '../dto/update-administrativo.dto.js';
-import type { ZodError } from 'zod';
-
-// ─── Helpers ─────────────────────────────────────────
-function parseId(value: string): number | null {
-  const id = Number(value);
-  return Number.isInteger(id) && id > 0 ? id : null;
-}
-
-function respondZodError(res: Response, error: ZodError): void {
-  res.status(400).json({
-    status: 'error',
-    message: 'Datos de entrada inválidos.',
-    errors: error.flatten().fieldErrors,
-  });
-}
-
-function parsePagination(query: any) {
-  const page = parseInt(query.page, 10) || 1;
-  const limit = parseInt(query.limit, 10) || 10;
-  return {
-    page: Math.max(1, page),
-    limit: Math.max(1, Math.min(100, limit)), // límite máximo 100
-  };
-}
+import { respondZodError } from '../../../helpers/respondZodError.js';
+import { parsePagination } from '../../../helpers/parsePagination.js';
 
 // ─── Controlador ─────────────────────────────────────
 export const administrativoController = {
@@ -44,8 +22,8 @@ export const administrativoController = {
   // GET /administrativos/:id
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = parseId(req.params.id as string);
-      if (id === null) {
+      const id = parseInt(req.params.id as string);
+      if (isNaN(id) || id <= 0) {
         return res.status(400).json({
           status: 'error',
           message: 'El parámetro "id" debe ser un entero positivo.',
@@ -84,8 +62,8 @@ export const administrativoController = {
   // PATCH /administrativos/:id
   update: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = parseId(req.params.id as string);
-      if (id === null) {
+      const id = parseInt(req.params.id as string);
+      if (isNaN(id) || id <= 0) {
         return res.status(400).json({
           status: 'error',
           message: 'El parámetro "id" debe ser un entero positivo.',
@@ -111,8 +89,8 @@ export const administrativoController = {
   // DELETE /administrativos/:id
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = parseId(req.params.id as string);
-      if (id === null) {
+      const id = parseInt(req.params.id as string);
+      if (isNaN(id) || id <= 0) {
         return res.status(400).json({
           status: 'error',
           message: 'El parámetro "id" debe ser un entero positivo.',

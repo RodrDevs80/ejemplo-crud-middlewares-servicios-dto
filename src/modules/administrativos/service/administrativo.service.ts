@@ -40,7 +40,7 @@ export const administrativoService = {
 
   async create(data: CreateAdministrativoDto) {
     // El hook `beforeCreate` del modelo se encargará de hashear la contraseña
-    return Administrativo.create(data);
+    return Administrativo.create(data as any);
   },
 
   async update(id: number, data: UpdateAdministrativoDto) {

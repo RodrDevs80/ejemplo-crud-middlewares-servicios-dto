@@ -6,7 +6,9 @@ import { sequelize } from "./modules/index.js";
 import { administrativoRouter } from "./modules/administrativos/administrativo.routes.js";
 import { errorHandler } from "./core/middlewares/error-handler.middleware.js";
 import { rolRouter } from './modules/roles/roles.routes.js';
-
+import { carreraRouter } from "./modules/carreras/carrera.routes.js";
+import { planEstudioRouter } from "./modules/planes_estudios/plan-estudio.routes.js";
+import { unidadCurricularRouter } from "./modules/unidades_curriculares/unidad-curricular.routes.js";
 dotenv.config();
 
 const app = express();
@@ -19,6 +21,9 @@ app.use(morgan("dev"));
 
 app.use(`${RAIZ}/administrativos`, administrativoRouter);
 app.use(`${RAIZ}/roles`, rolRouter);
+app.use(`${RAIZ}/carreras`, carreraRouter);
+app.use(`${RAIZ}/plan-estudios`, planEstudioRouter);
+app.use(`${RAIZ}/unidades-curriculares`, unidadCurricularRouter);
 
 app.get("/health", (req: Request, res: Response) => {
   res.json({

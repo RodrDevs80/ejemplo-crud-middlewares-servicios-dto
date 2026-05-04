@@ -10,6 +10,7 @@ interface EstudianteAttributes extends InferAttributes<Estudiante> {
   email: string;
   telefono: string;
   domicilio: string;
+  fechaDeNacimiento: string;
   foto: string | null;
   trabaja: boolean | null;
   activo: boolean;
@@ -24,6 +25,7 @@ interface EstudianteCreationAttributes extends InferCreationAttributes<Estudiant
   email: string;
   telefono: string;
   domicilio: string;
+  fechaDeNacimiento: string;
   foto: string | null;
   trabaja: boolean | null;
   idUsuario: number;
@@ -38,6 +40,7 @@ class Estudiante extends Model<EstudianteAttributes, EstudianteCreationAttribute
   declare email: string;
   declare telefono: string;
   declare domicilio: string;
+  declare fechaDeNacimiento: string;
   declare foto: string | null;
   declare trabaja: boolean | null;
   declare activo: CreationOptional<boolean>;
@@ -92,6 +95,11 @@ Estudiante.init(
     domicilio: {
       type: DataTypes.STRING(200),
       allowNull: false,
+    },
+    fechaDeNacimiento: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      field: "fecha_de_nacimiento"
     },
     foto: {
       type: DataTypes.STRING(255),

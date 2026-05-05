@@ -32,9 +32,6 @@ Legajo.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 Administrativo.hasMany(Preinscripto, { foreignKey: "idAdministrativo" });
 Preinscripto.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 
-// Relaciones adicionales (opcionales, si existen otros modelos)
-// Por ejemplo: Estudiante.hasMany(Legajo) etc.
-
 export {
   sequelize,
   Administrativo,

@@ -8,6 +8,8 @@ import InscripcionCarrera from "./inscripcionCarrera/model/InscripcionCarrera.js
 import Legajo from "./legajos/model/Legajo.js";
 import Preinscripto from "./preinscriptos/model/Preinscripto.js";
 import Rol from "./roles/model/Rol.js";
+import InstanciaEvaluativa from "./instanciasEvaluativas/model/InstanciaEvaluativa.js";
+import LegajoXInstanciaEvaluativa from "./legajosXInstanciasEvaluativas/model/LegajoXInstanciaEvaluativa.js";
 import Carrera from "./carreras/model/Carrera.js";
 import PlanEstudio from "./planes_estudios/model/PlanEstudio.js";
 import UnidadCurricular from "./unidades_curriculares/model/UnidadCurricular.js";
@@ -34,6 +36,20 @@ UnidadCurricular.belongsTo(PlanEstudio, { foreignKey: "idPlanEstudio" });
 Administrativo.hasMany(UnidadCurricular, { foreignKey: "idAdministrativo" });
 UnidadCurricular.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 
+// ---------- Rol ----------
+Rol.hasMany(Administrativo, { foreignKey: "idRol" });
+Administrativo.belongsTo(Rol, { foreignKey: "idRol" });
+
+// ---------- InstanciaEvaluativa ----------
+Administrativo.hasMany(InstanciaEvaluativa, { foreignKey: "idAdministrativo" });
+InstanciaEvaluativa.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
+
+// ---------- LegajoXInstanciaEvaluativa ----------
+InstanciaEvaluativa.hasMany(LegajoXInstanciaEvaluativa, { foreignKey: "idInstanciaEvaluativa" });
+LegajoXInstanciaEvaluativa.belongsTo(InstanciaEvaluativa, { foreignKey: "idInstanciaEvaluativa" });
+
+Administrativo.hasMany(LegajoXInstanciaEvaluativa, { foreignKey: "idAdministrativo" });
+LegajoXInstanciaEvaluativa.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 
 // Relaciones con Administrativo (ya que todas las tablas tienen idAdministrativo)
 Administrativo.hasMany(CambioPlanEstudio, { foreignKey: "idAdministrativo" });
@@ -69,6 +85,8 @@ export {
   InscripcionCarrera,
   Legajo,
   Preinscripto,
+  InstanciaEvaluativa,
+  LegajoXInstanciaEvaluativa
   Carrera, 
   PlanEstudio
 };

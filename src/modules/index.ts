@@ -8,6 +8,31 @@ import InscripcionCarrera from "./inscripcionCarrera/model/InscripcionCarrera.js
 import Legajo from "./legajos/model/Legajo.js";
 import Preinscripto from "./preinscriptos/model/Preinscripto.js";
 import Rol from "./roles/model/Rol.js";
+import Carrera from "./carreras/model/Carrera.js";
+import PlanEstudio from "./planes_estudios/model/PlanEstudio.js";
+import UnidadCurricular from "./unidades_curriculares/model/UnidadCurricular.js";
+
+
+//  Carrera -> PlanEstudio
+Carrera.hasMany(PlanEstudio, { foreignKey: "idCarrera" });
+PlanEstudio.belongsTo(Carrera, { foreignKey: "idCarrera" });
+
+
+//  Administrativo -> PlanEstudio
+Administrativo.hasMany(PlanEstudio, { foreignKey: "idAdministrativo" });
+PlanEstudio.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
+
+// Administrativo ↔ Carrera
+Administrativo.hasMany(Carrera, { foreignKey: "idAdministrativo" });
+Carrera.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
+
+// PlanEstudio ↔ UnidadCurricular
+PlanEstudio.hasMany(UnidadCurricular, { foreignKey: "idPlanEstudio" });
+UnidadCurricular.belongsTo(PlanEstudio, { foreignKey: "idPlanEstudio" });
+
+// Administrativo ↔ UnidadCurricular
+Administrativo.hasMany(UnidadCurricular, { foreignKey: "idAdministrativo" });
+UnidadCurricular.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 
 
 // Relaciones con Administrativo (ya que todas las tablas tienen idAdministrativo)
@@ -32,6 +57,7 @@ Legajo.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 Administrativo.hasMany(Preinscripto, { foreignKey: "idAdministrativo" });
 Preinscripto.belongsTo(Administrativo, { foreignKey: "idAdministrativo" });
 
+
 export {
   sequelize,
   Administrativo,
@@ -42,5 +68,7 @@ export {
   InformacionExtra,
   InscripcionCarrera,
   Legajo,
-  Preinscripto
+  Preinscripto,
+  Carrera, 
+  PlanEstudio
 };
